@@ -22,7 +22,7 @@ const CodingSession: React.FC = (): JSX.Element => {
   return (
     <MainLayout>
       <div className="container">
-        <Title>Сессия Кодирования</Title>
+        <Title>Code</Title>
 
         {renderSection(FUNCTIONALITY_SECTION)}
         {renderSection(TECHNICAL_REQUIREMENTS)}

@@ -16,8 +16,8 @@ const Drawer: React.FC<DrawerProps> = ({
 }): JSX.Element => {
   return (
     <>
-      <Overlay isOpen={isOpen} onClick={onClose} />
-      <DrawerContainer isOpen={isOpen} position={position} width={width}>
+      <Overlay $isOpen={isOpen} onClick={onClose} />
+      <DrawerContainer $isOpen={isOpen} $position={position} $width={width}>
         <CloseButton onClick={onClose}>&times;</CloseButton>
         <DrawerContentContainer>{children}</DrawerContentContainer>
       </DrawerContainer>

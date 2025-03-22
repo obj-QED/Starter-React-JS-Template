@@ -32,7 +32,8 @@
     "build": "npm run generate-theme && craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "watch-theme": "nodemon"
+    "watch-theme": "nodemon",
+    "analyze": "ANALYZE=true craco build"
   },
   "eslintConfig": {
     "extends": [
@@ -59,6 +60,7 @@
     "nodemon": "^3.1.9",
     "sass": "^1.86.0",
     "sass-loader": "^16.0.5",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "webpack-bundle-analyzer": "^4.10.2"
   }
 }

@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 interface OverlayProps {
-  isOpen: boolean;
+  $isOpen: boolean;
 }
 
 interface DrawerContainerProps extends OverlayProps {
-  position: 'left' | 'right';
-  width: string;
+  $position: 'left' | 'right';
+  $width: string;
 }
 
 export const Overlay = styled.div<OverlayProps>`
@@ -16,8 +16,8 @@ export const Overlay = styled.div<OverlayProps>`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
   transition: opacity 0.3s ease, visibility 0.3s ease;
   z-index: 1000;
 `;
@@ -25,12 +25,12 @@ export const Overlay = styled.div<OverlayProps>`
 export const DrawerContainer = styled.div<DrawerContainerProps>`
   position: fixed;
   top: 0;
-  ${({ position }) => position}: 0;
-  width: ${({ width }) => width};
+  ${({ $position }) => $position}: 0;
+  width: ${({ $width }) => $width};
   height: 100%;
   background-color: white;
-  box-shadow: ${({ position }) => (position === 'left' ? '2px 0 5px rgba(0, 0, 0, 0.1)' : '-2px 0 5px rgba(0, 0, 0, 0.1)')};
-  transform: translateX(${({ isOpen, position }) => (isOpen ? '0' : position === 'left' ? '-100%' : '100%')});
+  box-shadow: ${({ $position }) => ($position === 'left' ? '2px 0 5px rgba(0, 0, 0, 0.1)' : '-2px 0 5px rgba(0, 0, 0, 0.1)')};
+  transform: translateX(${({ $isOpen, $position }) => ($isOpen ? '0' : $position === 'left' ? '-100%' : '100%')});
   transition: transform 0.3s ease;
   z-index: 1001;
 `;
