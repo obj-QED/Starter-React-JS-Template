@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { JSX, useState } from 'react';
 import Drawer from './index';
 import DrawerContent from './DrawerContent';
 import { LEFT_DRAWER_CONTENT, RIGHT_DRAWER_CONTENT } from './constants';
 import { ExampleContainer, Button } from './styled';
 
-const DrawerExample: React.FC = () => {
-  const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false);
-  const [isRightDrawerOpen, setIsRightDrawerOpen] = useState(false);
+const DrawerExample: React.FC = (): JSX.Element => {
+  const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState<boolean>(false);
+  const [isRightDrawerOpen, setIsRightDrawerOpen] = useState<boolean>(false);
 
   return (
     <ExampleContainer>

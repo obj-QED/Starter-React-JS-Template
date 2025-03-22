@@ -1,0 +1,6 @@
+{
+  "watch": ["src/assets/scss"],
+  "ext": "scss",
+  "ignore": ["src/style/*"],
+  "exec": "npm run generate-theme"
+} 

@@ -1,0 +1,79 @@
+@import './_colors.scss';
+@import './_variables.scss';
+
+// Определяем переменные темы
+$theme: (
+  colors: (
+    primary: map-get($color-map, primary),
+    secondary: map-get($color-map, secondary),
+    light: map-get($color-map, white),
+    dark: map-get($color-map, black),
+    textPrimary: map-get($color-map, black),
+    textSecondary: map-get($color-map, dark-gray),
+    success: map-get($color-map, success),
+    warning: map-get($color-map, warning),
+    error: map-get($color-map, error),
+    gray: map-get($color-map, gray),
+    supportGray: map-get($color-map, support-gray),
+    silverGray: map-get($color-map, silver-gray),
+    darkGray: map-get($color-map, dark-gray),
+    lightGray: map-get($color-map, light-gray),
+    info: map-get($color-map, info),
+    accent: map-get($color-map, accent),
+  ),
+  spacing: (
+    xs: $spacing-xs,
+    sm: $spacing-sm,
+    md: $spacing-md,
+    lg: $spacing-lg,
+    xl: $spacing-xl,
+  ),
+  typography: (
+    fontWeightRegular: $font-weight-regular,
+    fontWeightMedium: $font-weight-medium,
+    fontWeightBold: $font-weight-bold,
+  ),
+  shadows: (
+    small: $shadow-small,
+    medium: $shadow-medium,
+    large: $shadow-large,
+  ),
+  transitions: (
+    fast: $transition-fast,
+    medium: $transition-medium,
+    slow: $transition-slow,
+  ),
+);
+
+// Миксин для применения темы
+@mixin theme {
+  @each $category, $values in $theme {
+    @each $key, $value in $values {
+      --#{$category}-#{$key}: #{$value};
+    }
+  }
+}
+
+// Применяем тему к корневому элементу
+:root {
+  @include theme;
+}
+
+// Базовые стили
+body {
+  color: var(--color-textPrimary);
+  background-color: var(--color-light);
+  font-weight: var(--typography-fontWeightRegular);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+}
+
+// Экспортируем значения для styled-components
+:export {
+  @each $category, $values in $theme {
+    @each $key, $value in $values {
+      #{$category}-#{$key}: #{$value};
+    }
+  }
+}

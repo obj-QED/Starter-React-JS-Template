@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { DrawerProps } from './types';
 import {
   Overlay,
@@ -13,7 +13,7 @@ const Drawer: React.FC<DrawerProps> = ({
   children,
   position = 'right',
   width = '300px',
-}) => {
+}): JSX.Element => {
   return (
     <>
       <Overlay isOpen={isOpen} onClick={onClose} />

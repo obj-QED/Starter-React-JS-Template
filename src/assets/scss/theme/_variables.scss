@@ -28,4 +28,34 @@ $breakpoints: (
       @content;
     }
   }
-} 
+}
+
+// Цвета
+$primary-color: #1890ff;
+$secondary-color: #52c41a;
+$light-color: #ffffff;
+$dark-color: #141414;
+$text-primary: rgba(0, 0, 0, 0.85);
+$text-secondary: rgba(0, 0, 0, 0.65);
+
+// Отступы
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// Типографика
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// Тени
+$shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
+$shadow-large: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+// Переходы
+$transition-fast: all 0.2s ease;
+$transition-medium: all 0.3s ease;
+$transition-slow: all 0.5s ease; 

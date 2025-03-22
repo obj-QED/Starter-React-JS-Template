@@ -14,6 +14,11 @@
   --ant-border-color-base: #d9d9d9;
 }
 
+.ant-layout {
+  font-family: var(--font-primary);
+  font-size: unset;
+}
+
 // Кастомизация компонентов
 .ant-btn {
   &-primary {
@@ -46,4 +51,4 @@
   --ant-text-color-secondary: rgba(255, 255, 255, 0.45);
   --ant-disabled-color: rgba(255, 255, 255, 0.25);
   --ant-border-color-base: #434343;
-} 
+}

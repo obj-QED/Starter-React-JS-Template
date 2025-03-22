@@ -1,14 +1,5 @@
-@use 'sass:map'; 
+@use 'sass:map';
 @use './variables' as *;
-
-// Container breakpoints
-$container-max-widths: (
-  'sm': 540px,
-  'md': 720px,
-  'lg': 1024px,
-  'xl': 1200px,
-  'xxl': 1400px
-);
 
 // Container padding
 $container-padding-x: 1rem;
@@ -24,7 +15,7 @@ $container-padding-x: 1rem;
 }
 
 .container {
-  @each $breakpoint, $max-width in $container-max-widths {
+  @each $breakpoint, $max-width in $breakpoints {
     @include media-up($breakpoint) {
       max-width: $max-width;
     }
@@ -32,7 +23,7 @@ $container-padding-x: 1rem;
 }
 
 // Container modifiers
-@each $breakpoint, $max-width in $container-max-widths {
+@each $breakpoint, $max-width in $breakpoints {
   .container-#{$breakpoint} {
     @extend .container-fluid;
 

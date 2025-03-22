@@ -11,6 +11,8 @@ $color-map: (
   silver-gray: #eeeeef,
   dark-gray: #777777,
   light-gray: #f3f3f7,
+  info: #1aa1e0,
+  accent: #ff3366,
 );
 
 @each $color, $value in $color-map {

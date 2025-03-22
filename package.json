@@ -27,10 +27,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
-    "build": "craco build",
+    "generate-theme": "node src/config/theme-converter.js",
+    "start": "npm run generate-theme && concurrently \"npm run watch-theme\" \"craco start\"",
+    "build": "npm run generate-theme && craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "watch-theme": "nodemon"
   },
   "eslintConfig": {
     "extends": [
@@ -53,7 +55,10 @@
   "devDependencies": {
     "@craco/craco": "^7.1.0",
     "babel-plugin-styled-components": "^2.1.4",
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.9",
     "sass": "^1.86.0",
-    "sass-loader": "^16.0.5"
+    "sass-loader": "^16.0.5",
+    "ts-node": "^10.9.2"
   }
 }

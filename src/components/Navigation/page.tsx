@@ -1,33 +1,43 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { ROUTES, ROUTE_TITLES } from '@/constants/routes';
 
 const Nav = styled.nav`
-  padding: 1rem 0;
-  background-color: #f8f9fa;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: ${({ theme }) => theme.colors.light};
+  box-shadow: ${({ theme }) => theme.shadows.small};
+  padding: ${({ theme }) => theme.spacing.md} 0;
 `;
 
 const NavList = styled.ul`
   display: flex;
-  gap: 1rem;
+  gap: ${({ theme }) => theme.spacing.lg};
+  list-style: none;
+  margin: 0;
+  padding: 0;
 `;
 
-const Navigation: React.FC = () => {
+const NavLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.textPrimary};
+  text-decoration: none;
+  font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
+  transition: ${({ theme }) => theme.transitions.fast};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
+const Navigation: React.FC = (): JSX.Element => {
   return (
     <Nav>
       <div className="container">
         <NavList>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/code">Код</Link>
-          </li>
+          {Object.entries(ROUTES).map(([key, path]) => (
+            <li key={path}>
+              <NavLink to={path}>{ROUTE_TITLES[path]}</NavLink>
+            </li>
+          ))}
         </NavList>
       </div>
     </Nav>
