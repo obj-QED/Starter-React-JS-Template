@@ -1,46 +1,138 @@
-# Getting Started with Create React App
+# My React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Современное React-приложение с оптимизированной производительностью и удобной структурой.
 
-## Available Scripts
+## 🚀 Технологии
 
-In the project directory, you can run:
+- **React 19** - Основной фреймворк
+- **TypeScript** - Типизация
+- **Styled Components** - Стилизация компонентов
+- **React Router** - Маршрутизация
+- **Ant Design** - UI компоненты
+- **SASS/SCSS** - Препроцессор стилей
+- **CRACO** - Конфигурация Create React App
+- **Webpack Bundle Analyzer** - Анализ размера бандла
 
-### `npm start`
+## 📁 Структура проекта
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+src/
+├── assets/                 # Статические ресурсы
+│   └── scss/              # SCSS файлы
+│       ├── theme/         # Тема приложения
+│       ├── mixins/        # SCSS миксины
+│       ├── fonts/         # Шрифты
+│       └── buttons/       # Стили кнопок
+├── components/            # Переиспользуемые компоненты
+│   ├── Drawer/           # Компонент выдвижной панели
+│   ├── LoadingSpinner/   # Компонент загрузки
+│   └── Navigation/       # Навигация
+├── config/               # Конфигурационные файлы
+│   ├── theme-converter.js # Конвертер SCSS темы
+│   └── craco.config.js   # Конфигурация CRACO
+├── constants/            # Константы приложения
+├── hooks/               # Пользовательские хуки
+├── layouts/             # Компоновки страниц
+├── pages/               # Страницы приложения
+│   ├── Home/           # Главная страница
+│   └── CodingSession/  # Страница сессии кодинга
+├── style/              # Стили и темы
+│   └── theme/         # Скомпилированные темы
+├── types/              # TypeScript типы
+├── utils/              # Утилиты
+├── App.tsx             # Корневой компонент
+└── index.tsx           # Точка входа
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🛠 Оптимизации
 
-### `npm test`
+### Производительность
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Разделение кода (Code Splitting)**
+   - Ленивая загрузка страниц через `React.lazy`
+   - Suspense для отображения состояния загрузки
+   - Оптимизированная загрузка компонентов
 
-### `npm run build`
+2. **Оптимизация сборки**
+   - Tree shaking для удаления неиспользуемого кода
+   - Сжатие SASS/SCSS
+   - Оптимизация styled-components
+   - Анализ размера бандла
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **Оптимизация разработки**
+   - Source maps для отладки
+   - Hot Module Replacement
+   - Автоматическая генерация темы
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Стилизация
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Тематизация**
+   - Централизованное управление темой
+   - Поддержка темных/светлых режимов
+   - Переиспользуемые переменные
 
-### `npm run eject`
+2. **Компоненты**
+   - Модульная структура
+   - Переиспользуемые styled-components
+   - Поддержка пропсов и вариантов
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 🚀 Запуск проекта
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+# Установка зависимостей
+npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Запуск в режиме разработки
+npm start
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+# Сборка для продакшена
+npm run build
 
-## Learn More
+# Анализ размера бандла
+npm run analyze
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📦 Скрипты
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `npm start` - Запуск в режиме разработки
+- `npm run build` - Сборка для продакшена
+- `npm run analyze` - Анализ размера бандла
+- `npm run generate-theme` - Генерация темы
+- `npm run watch-theme` - Отслеживание изменений темы
+
+## 🔧 Конфигурация
+
+### CRACO
+- Настроен для оптимизации сборки
+- Поддержка алиасов путей (@/)
+- Оптимизация SASS/SCSS
+- Настройка styled-components
+
+### Webpack
+- Tree shaking
+- Оптимизация бандла
+- Анализ размера бандла
+- Source maps
+
+## 📝 Примечания
+
+- Используйте `@/` для абсолютных импортов
+- Компоненты размещаются в директории `components/`
+- Страницы размещаются в директории `pages/`
+- Стили компонентов находятся рядом с компонентами
+- Глобальные стили в `assets/scss/`
+
+## 🔍 Анализ производительности
+
+Для анализа размера бандла:
+1. Запустите `npm run analyze`
+2. Откройте http://localhost:8888
+3. Изучите визуализацию бандла
+
+## 🤝 Вклад в проект
+
+1. Форкните репозиторий
+2. Создайте ветку для фичи (`git checkout -b feature/amazing-feature`)
+3. Зафиксируйте изменения (`git commit -m 'Add amazing feature'`)
+4. Отправьте изменения в ветку (`git push origin feature/amazing-feature`)
+5. Откройте Pull Request
