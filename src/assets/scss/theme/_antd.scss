@@ -1,0 +1,49 @@
+// Переопределение переменных Ant Design
+:root {
+  --ant-primary-color: #1890ff;
+  --ant-link-color: #1890ff;
+  --ant-success-color: #52c41a;
+  --ant-warning-color: #faad14;
+  --ant-error-color: #f5222d;
+  --ant-font-size-base: 14px;
+  --ant-heading-color: rgba(0, 0, 0, 0.85);
+  --ant-text-color: rgba(0, 0, 0, 0.65);
+  --ant-text-color-secondary: rgba(0, 0, 0, 0.45);
+  --ant-disabled-color: rgba(0, 0, 0, 0.25);
+  --ant-border-radius-base: 4px;
+  --ant-border-color-base: #d9d9d9;
+}
+
+// Кастомизация компонентов
+.ant-btn {
+  &-primary {
+    background: var(--ant-primary-color);
+    border-color: var(--ant-primary-color);
+  }
+}
+
+.ant-input {
+  border-radius: var(--ant-border-radius-base);
+}
+
+.ant-select {
+  &-selector {
+    border-radius: var(--ant-border-radius-base) !important;
+  }
+}
+
+.ant-modal {
+  &-content {
+    border-radius: calc(var(--ant-border-radius-base) * 2);
+  }
+}
+
+// Дополнительные темные стили для dark mode
+[data-theme='dark'] {
+  --ant-primary-color: #177ddc;
+  --ant-heading-color: rgba(255, 255, 255, 0.85);
+  --ant-text-color: rgba(255, 255, 255, 0.65);
+  --ant-text-color-secondary: rgba(255, 255, 255, 0.45);
+  --ant-disabled-color: rgba(255, 255, 255, 0.25);
+  --ant-border-color-base: #434343;
+} 

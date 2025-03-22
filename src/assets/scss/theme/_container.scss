@@ -1,0 +1,43 @@
+@use 'sass:map'; 
+@use './variables' as *;
+
+// Container breakpoints
+$container-max-widths: (
+  'sm': 540px,
+  'md': 720px,
+  'lg': 1024px,
+  'xl': 1200px,
+  'xxl': 1400px
+);
+
+// Container padding
+$container-padding-x: 1rem;
+
+// Container styles
+.container,
+.container-fluid {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: $container-padding-x;
+  padding-left: $container-padding-x;
+}
+
+.container {
+  @each $breakpoint, $max-width in $container-max-widths {
+    @include media-up($breakpoint) {
+      max-width: $max-width;
+    }
+  }
+}
+
+// Container modifiers
+@each $breakpoint, $max-width in $container-max-widths {
+  .container-#{$breakpoint} {
+    @extend .container-fluid;
+
+    @include media-up($breakpoint) {
+      max-width: $max-width;
+    }
+  }
+}

@@ -1,0 +1,20 @@
+@use 'sass:math';
+@use 'sass:list';
+@use '@/assets/scss/theme/variables' as *;
+
+@mixin size($pcSize, $mobSize) {
+  $addSize: $pcSize - $mobSize;
+  $addWidth: $maxWidth - $minWidth;
+
+  font-size: calc(#{$mobSize}px + #{$addSize} * ((100vw - #{$minWidth}px) / #{$addWidth}));
+  line-height: normal;
+}
+
+@mixin font($size, $sizeMobile: null, $weight: 400, $color: null) {
+  @include size($size, $sizeMobile);
+  font-weight: $weight;
+
+  @if $color != null {
+    color: $color;
+  }
+}
