@@ -1,6 +1,6 @@
 @use 'sass:math';
 @use 'sass:list';
-@use '@/assets/scss/theme/variables' as *;
+@use '../theme/variables' as *;
 
 @mixin size($pcSize, $mobSize) {
   $addSize: $pcSize - $mobSize;

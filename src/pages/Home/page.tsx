@@ -5,7 +5,7 @@ import { notifications } from '@mantine/notifications';
 import { BookList } from '@/components/BookList';
 import { BookForm } from '@/components/BookForm';
 import { booksApi } from '@/api/books';
-import { Book, CreateBookDto, UpdateBookDto } from '@/types/book';
+import { Book, CreateBookDto } from '@/types/book';
 
 const HomePage: React.FC = () => {
   const queryClient = useQueryClient();

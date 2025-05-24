@@ -30,8 +30,8 @@
     "@babel/plugin-syntax-jsx": "^7.27.1",
     "@craco/craco": "^7.1.0",
     "babel-plugin-styled-components": "^2.1.4",
-    "sass": "^1.89.0",
-    "sass-loader": "^16.0.5",
+    "sass": "1.32.13",
+    "sass-loader": "10.1.1",
     "webpack-bundle-analyzer": "^4.10.2"
   },
   "scripts": {

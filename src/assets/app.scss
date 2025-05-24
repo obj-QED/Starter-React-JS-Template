@@ -1,6 +1,6 @@
-@use '@/assets/scss/mixins/mixins' as *;
-@use '@/assets/scss/fonts/fonts' as *;
-@use '@/assets/scss/buttons/buttons' as *;
+@use './scss/mixins/_mixins' as *;
+@use './scss/fonts/_fonts' as *;
+@use './scss/buttons/_buttons' as *;
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;

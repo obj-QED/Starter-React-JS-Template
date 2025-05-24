@@ -32,19 +32,31 @@ module.exports = {
         webpackConfig.devtool = 'eval-source-map';
       }
 
+      // Обновляем конфигурацию sass-loader
+      const sassRule = webpackConfig.module.rules
+        .find(rule => rule.oneOf)
+        .oneOf.find(rule => rule.test && rule.test.toString().includes('scss|sass'));
+      
+      if (sassRule) {
+        const sassLoader = sassRule.use.find(loader => loader.loader && loader.loader.includes('sass-loader'));
+        if (sassLoader) {
+          sassLoader.options = {
+            ...sassLoader.options,
+            implementation: require('sass'),
+            sassOptions: {
+              outputStyle: 'compressed',
+              includePaths: [path.resolve(__dirname, 'src/assets/scss')],
+            },
+            sourceMap: true,
+            webpackImporter: false
+          };
+        }
+      }
+
       return webpackConfig;
     },
   },
   style: {
-    sass: {
-      loaderOptions: {
-        // Оптимизация SASS
-        sassOptions: {
-          outputStyle: 'compressed',
-          includePaths: [path.resolve(__dirname, 'src/assets/scss')],
-        },
-      },
-    },
     modules: {
       localIdentName: '[local]_[hash:base64:5]',
     },

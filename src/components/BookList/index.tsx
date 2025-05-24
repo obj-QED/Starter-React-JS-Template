@@ -3,6 +3,7 @@ import { Table, TextInput, Button, Group } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { booksApi } from '@/api/books';
 import { Book } from '@/types/book';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 interface BookListProps {
   onEdit: (book: Book) => void;
@@ -18,12 +19,10 @@ export const BookList: React.FC<BookListProps> = ({ onEdit, onDelete, onView }) 
     queryFn: booksApi.getAll,
   });
 
-  const filteredBooks = books.filter((book: Book) =>
-    book.title.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredBooks = books.filter((book: Book) => book.title.toLowerCase().includes(search.toLowerCase()));
 
   if (isLoading) {
-    return <div>Загрузка...</div>;
+    return <LoadingSpinner />;
   }
 
   return (
@@ -71,4 +70,4 @@ export const BookList: React.FC<BookListProps> = ({ onEdit, onDelete, onView }) 
       </Table>
     </div>
   );
-}; 
+};
