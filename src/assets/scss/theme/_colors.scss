@@ -13,6 +13,17 @@ $color-map: (
   'light-gray': #f3f3f7,
   'info': #1aa1e0,
   'accent': #ff3366,
+  // Цвета для инпутов
+  'input-bg': #ffffff,
+  'input-border': #e5e5e5,
+  'input-border-hover': #d0d0d0,
+  'input-border-focus': #1aa1e0,
+  'input-text': #000000,
+  'input-placeholder': #777777,
+  'input-disabled-bg': #f5f5f5,
+  'input-disabled-text': #999999,
+  'input-error-border': #ff5a50,
+  'input-error-text': #ff5a50,
 );
 
 @each $color, $value in $color-map {

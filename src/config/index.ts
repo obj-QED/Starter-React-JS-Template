@@ -1,8 +1,8 @@
 export const config = {
   app: {
-    name: 'My React App',
+    name: 'Book Manager',
     version: '1.0.0',
-    description: 'React application with TypeScript and styled-components',
+    description: 'Book Manager',
   },
   api: {
     baseUrl: process.env.REACT_APP_API_URL || 'http://localhost:3000',
@@ -13,7 +13,7 @@ export const config = {
     pageSizeOptions: [10, 20, 50, 100],
   },
   localStorage: {
-    prefix: 'my-react-app_',
+    prefix: 'book-manager_',
     tokenKey: 'token',
     themeKey: 'theme',
     languageKey: 'language',

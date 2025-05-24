@@ -1,28 +1,29 @@
 import React, { JSX, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
-import Navigation from './components/Navigation/page';
-import { Layout } from 'antd';
-import { theme } from '@/style/theme/styled-theme';
+import { AppShell } from '@mantine/core';
+import Navigation from '@/components/Navigation/page';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 // Ленивая загрузка страниц
-const Home = React.lazy(() => import('./pages/Home/page'));
+const Home = React.lazy(() => import('@/pages/Home/page'));
 
 const App: React.FC = (): JSX.Element => {
   return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <Layout className="layout">
+    <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <AppShell header={{ height: 60 }} padding="md">
+        <AppShell.Header>
           <Navigation />
+        </AppShell.Header>
+
+        <AppShell.Main>
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<Home />} />
             </Routes>
           </Suspense>
-        </Layout>
-      </Router>
-    </ThemeProvider>
+        </AppShell.Main>
+      </AppShell>
+    </Router>
   );
 };
 

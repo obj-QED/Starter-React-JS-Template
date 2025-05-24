@@ -41,6 +41,7 @@ module.exports = {
         // Оптимизация SASS
         sassOptions: {
           outputStyle: 'compressed',
+          includePaths: [path.resolve(__dirname, 'src/assets/scss')],
         },
       },
     },

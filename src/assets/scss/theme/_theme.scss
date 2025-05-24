@@ -44,6 +44,18 @@ $theme: (
     'medium': vars.$transition-medium,
     'slow': vars.$transition-slow,
   ),
+  'input': (
+    'bg': map.get(colors.$color-map, 'input-bg'),
+    'border': map.get(colors.$color-map, 'input-border'),
+    'borderHover': map.get(colors.$color-map, 'input-border-hover'),
+    'borderFocus': map.get(colors.$color-map, 'input-border-focus'),
+    'text': map.get(colors.$color-map, 'input-text'),
+    'placeholder': map.get(colors.$color-map, 'input-placeholder'),
+    'disabledBg': map.get(colors.$color-map, 'input-disabled-bg'),
+    'disabledText': map.get(colors.$color-map, 'input-disabled-text'),
+    'errorBorder': map.get(colors.$color-map, 'input-error-border'),
+    'errorText': map.get(colors.$color-map, 'input-error-text'),
+  )
 );
 
 // Миксин для применения темы
