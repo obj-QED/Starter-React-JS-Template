@@ -69,7 +69,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <Container size="xl">
+    <Container size="xl" p={0}>
       <Title order={1} mb="xl">
         Управление книгами
       </Title>
@@ -90,36 +90,15 @@ const HomePage: React.FC = () => {
         }}
       />
 
-      <Modal
-        opened={isCreateModalOpen}
-        onClose={() => setIsCreateModalOpen(false)}
-        title="Добавить книгу"
-      >
-        <BookForm
-          onSubmit={handleCreate}
-          onCancel={() => setIsCreateModalOpen(false)}
-        />
+      <Modal opened={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} title="Добавить книгу">
+        <BookForm onSubmit={handleCreate} onCancel={() => setIsCreateModalOpen(false)} />
       </Modal>
 
-      <Modal
-        opened={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        title="Редактировать книгу"
-      >
-        {selectedBook && (
-          <BookForm
-            initialValues={selectedBook}
-            onSubmit={handleEdit}
-            onCancel={() => setIsEditModalOpen(false)}
-          />
-        )}
+      <Modal opened={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title="Редактировать книгу">
+        {selectedBook && <BookForm initialValues={selectedBook} onSubmit={handleEdit} onCancel={() => setIsEditModalOpen(false)} />}
       </Modal>
 
-      <Modal
-        opened={isViewModalOpen}
-        onClose={() => setIsViewModalOpen(false)}
-        title="Информация о книге"
-      >
+      <Modal opened={isViewModalOpen} onClose={() => setIsViewModalOpen(false)} title="Информация о книге">
         {selectedBook && (
           <Paper p="md">
             <h3>{selectedBook.title}</h3>
