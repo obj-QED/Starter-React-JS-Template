@@ -8,8 +8,8 @@ const DrawerContent: React.FC<DrawerContentProps> = ({ title, description, items
       <h2>{title}</h2>
       <p>{description}</p>
       <ul>
-        {items.map((item, index) => (
-          <li key={index}>{item}</li>
+        {items.map((item) => (
+          <li key={`${title}-${item}`}>{item}</li>
         ))}
       </ul>
     </ContentContainer>

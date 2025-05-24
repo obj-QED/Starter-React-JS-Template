@@ -8,6 +8,9 @@ const books: Book[] = [
     author: 'Лев Толстой',
     year: 1869,
     description: 'Роман-эпопея, описывающий русское общество в эпоху войн против Наполеона.',
+    isbn: '978-5-389-06256-6',
+    createdAt: '2024-01-01T00:00:00.000Z',
+    updatedAt: '2024-01-01T00:00:00.000Z',
   },
   {
     id: '2',
@@ -15,8 +18,15 @@ const books: Book[] = [
     author: 'Фёдор Достоевский',
     year: 1866,
     description: 'Психологический роман о преступлении и его последствиях.',
+    isbn: '978-5-389-06257-3',
+    createdAt: '2024-01-01T00:00:00.000Z',
+    updatedAt: '2024-01-01T00:00:00.000Z',
   },
 ];
+
+const generateUniqueId = () => {
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+};
 
 export const handlers = [
   http.get('/favicon.ico', () => {
@@ -37,9 +47,12 @@ export const handlers = [
 
   http.post('/api/books', async ({ request }) => {
     const newBook = await request.json() as Omit<Book, 'id'>;
+    const now = new Date().toISOString();
     const book: Book = {
-      id: String(books.length + 1),
+      id: generateUniqueId(),
       ...newBook,
+      createdAt: now,
+      updatedAt: now,
     };
     books.push(book);
     return HttpResponse.json(book);
@@ -51,7 +64,11 @@ export const handlers = [
     if (index === -1) {
       return new HttpResponse(null, { status: 404 });
     }
-    books[index] = { ...books[index], ...updates };
+    books[index] = { 
+      ...books[index], 
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
     return HttpResponse.json(books[index]);
   }),
 

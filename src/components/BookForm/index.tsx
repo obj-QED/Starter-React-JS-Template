@@ -20,6 +20,8 @@ export const BookForm: React.FC<BookFormProps> = ({
       author: '',
       year: new Date().getFullYear(),
       description: '',
+      isbn: '',
+      coverUrl: '',
     },
     validate: {
       title: (value: string) => (!value ? 'Название обязательно' : null),

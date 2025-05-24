@@ -162,7 +162,11 @@ export const BookList: React.FC<BookListProps> = ({ onEdit, onDelete, onView }) 
         />
       </Group>
 
-      {filteredBooks.length === 0 ? (
+      {books.length === 0 ? (
+        <Alert title="Нет книг" color="blue">
+          В библиотеке пока нет книг. Добавьте первую книгу, нажав кнопку "Добавить книгу".
+        </Alert>
+      ) : filteredBooks.length === 0 ? (
         <Alert title="Ничего не найдено" color="yellow">
           По вашему запросу "{search}" ничего не найдено. Попробуйте изменить параметры поиска.
         </Alert>
