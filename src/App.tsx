@@ -8,7 +8,6 @@ import LoadingSpinner from '@/components/LoadingSpinner';
 
 // Ленивая загрузка страниц
 const Home = React.lazy(() => import('./pages/Home/page'));
-const CodingSession = React.lazy(() => import('./pages/CodingSession/page'));
 
 const App: React.FC = (): JSX.Element => {
   return (
@@ -19,7 +18,6 @@ const App: React.FC = (): JSX.Element => {
           <Suspense fallback={<LoadingSpinner />}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/code" element={<CodingSession />} />
             </Routes>
           </Suspense>
         </Layout>

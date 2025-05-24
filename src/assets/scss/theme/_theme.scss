@@ -60,16 +60,6 @@ $theme: (
   @include theme;
 }
 
-// Базовые стили
-body {
-  color: var(--color-textPrimary);
-  background-color: var(--color-light);
-  font-weight: var(--typography-fontWeightRegular);
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-}
-
 // Экспортируем значения для styled-components
 :export {
   @each $category, $values in $theme {

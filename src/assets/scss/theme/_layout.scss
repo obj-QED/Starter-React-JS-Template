@@ -1,43 +1,6 @@
 @use './variables' as *;
 @use 'sass:map';
 
-// Переопределение стилей Layout
-.ant-layout {
-  &.layout {
-    min-height: 100vh;
-    background-color: #ffffff;
-  }
-
-  .ant-layout-content {
-    min-height: auto;
-    background-color: #ffffff;
-
-    &.layout-content {
-      max-width: map.get($breakpoints, 'xl');
-      margin: 0 auto;
-      padding: 0 16px;
-      width: 100%;
-
-      @include media-down('md') {
-        padding: 0 12px;
-      }
-
-      @include media-down('sm') {
-        padding: 0 8px;
-      }
-    }
-  }
-
-  // Темная тема
-  &[data-theme='dark'] {
-    background-color: #141414;
-
-    .ant-layout-content {
-      background-color: #141414;
-    }
-  }
-}
-
 ul {
   list-style: none;
   margin: 0;
