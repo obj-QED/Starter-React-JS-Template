@@ -1,45 +1,36 @@
-import React, { JSX } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { ROUTES, ROUTE_TITLES } from '@/constants/routes';
 
 const Nav = styled.nav`
-  background-color: ${({ theme }) => theme.colors.light};
-  box-shadow: ${({ theme }) => theme.shadows.small};
-  padding: ${({ theme }) => theme.spacing.md} 0;
-`;
-
-const NavList = styled.ul`
   display: flex;
-  gap: ${({ theme }) => theme.spacing.lg};
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  flex-direction: column;
+  gap: ${({ theme }) => theme.spacing.md};
 `;
 
-const NavLink = styled(Link)`
-  color: ${({ theme }) => theme.colors.textPrimary};
+const StyledNavLink = styled(NavLink)`
+  color: ${({ theme }) => theme.colors.text};
   text-decoration: none;
-  font-weight: ${({ theme }) => theme.typography.fontWeightMedium};
-  transition: ${({ theme }) => theme.transitions.fast};
+  padding: ${({ theme }) => theme.spacing.sm};
+  border-radius: 4px;
+  transition: background-color 0.2s;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.primary}20;
+  }
+
+  &.active {
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: white;
   }
 `;
 
-const Navigation: React.FC = (): JSX.Element => {
+const Navigation: React.FC = () => {
   return (
     <Nav>
-      <div className="container">
-        <NavList>
-          {Object.entries(ROUTES).map(([key, path]) => (
-            <li key={path}>
-              <NavLink to={path}>{ROUTE_TITLES[path]}</NavLink>
-            </li>
-          ))}
-        </NavList>
-      </div>
+      <StyledNavLink to={ROUTES.HOME}>{ROUTE_TITLES[ROUTES.HOME]}</StyledNavLink>
+      <StyledNavLink to={ROUTES.CODING_SESSION}>{ROUTE_TITLES[ROUTES.CODING_SESSION]}</StyledNavLink>
     </Nav>
   );
 };

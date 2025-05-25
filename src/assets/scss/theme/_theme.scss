@@ -1,26 +1,12 @@
 @use 'sass:map';
-@use './_colors.scss' as colors;
-@use './_variables.scss' as vars;
+@use './_colors' as colors;
+@use './_variables' as vars;
 
 // Определяем переменные темы
 $theme: (
   'colors': (
     'primary': map.get(colors.$color-map, 'primary'),
     'secondary': map.get(colors.$color-map, 'secondary'),
-    'light': map.get(colors.$color-map, 'white'),
-    'dark': map.get(colors.$color-map, 'black'),
-    'textPrimary': map.get(colors.$color-map, 'black'),
-    'textSecondary': map.get(colors.$color-map, 'dark-gray'),
-    'success': map.get(colors.$color-map, 'success'),
-    'warning': map.get(colors.$color-map, 'warning'),
-    'error': map.get(colors.$color-map, 'error'),
-    'gray': map.get(colors.$color-map, 'gray'),
-    'supportGray': map.get(colors.$color-map, 'support-gray'),
-    'silverGray': map.get(colors.$color-map, 'silver-gray'),
-    'darkGray': map.get(colors.$color-map, 'dark-gray'),
-    'lightGray': map.get(colors.$color-map, 'light-gray'),
-    'info': map.get(colors.$color-map, 'info'),
-    'accent': map.get(colors.$color-map, 'accent'),
   ),
   'spacing': (
     'xs': vars.$spacing-xs,
@@ -29,7 +15,15 @@ $theme: (
     'lg': vars.$spacing-lg,
     'xl': vars.$spacing-xl,
   ),
+  'radius': (
+    'xs': vars.$radius-xs,
+    'sm': vars.$radius-sm,
+    'md': vars.$radius-md,
+    'lg': vars.$radius-lg,
+    'xl': vars.$radius-xl,
+  ),
   'typography': (
+    'fontFamily': vars.$font-family,
     'fontWeightRegular': vars.$font-weight-regular,
     'fontWeightMedium': vars.$font-weight-medium,
     'fontWeightBold': vars.$font-weight-bold,
@@ -46,11 +40,18 @@ $theme: (
   ),
 );
 
+// Функция для проверки значения
+@function is-valid-value($value) {
+  @return $value != null and $value != '' and $value != 'undefined' and $value != 'null';
+}
+
 // Миксин для применения темы
 @mixin theme {
   @each $category, $values in $theme {
     @each $key, $value in $values {
-      --#{$category}-#{$key}: #{$value};
+      @if is-valid-value($value) {
+        --#{$category}-#{$key}: #{$value};
+      }
     }
   }
 }
@@ -60,21 +61,13 @@ $theme: (
   @include theme;
 }
 
-// Базовые стили
-body {
-  color: var(--color-textPrimary);
-  background-color: var(--color-light);
-  font-weight: var(--typography-fontWeightRegular);
-  font-family: var(--font-family-base);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
-}
-
 // Экспортируем значения для styled-components
 :export {
   @each $category, $values in $theme {
     @each $key, $value in $values {
-      #{$category}-#{$key}: #{$value};
+      @if is-valid-value($value) {
+        #{$category}-#{$key}: #{$value};
+      }
     }
   }
 }

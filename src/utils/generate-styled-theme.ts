@@ -2,32 +2,31 @@
 import { DefaultTheme } from 'styled-components';
 
 export const theme: DefaultTheme = {
-  "colors": {
-    "primary": "#1aa1e0",
-    "secondary": "#ffa800",
-    "light": "#ffffff",
-    "dark": "#000000",
-    "textPrimary": "#000000",
-    "textSecondary": "#777777",
-    "success": "#75a200",
-    "warning": "#ffda15",
-    "error": "#ff5a50",
-    "gray": "#f3f3f7",
-    "supportGray": "#bfc0be",
-    "silverGray": "#eeeeef",
-    "darkGray": "#777777",
-    "lightGray": "#f3f3f7",
-    "info": "#1aa1e0",
-    "accent": "#ff3366"
+  colors: {
+    primary: '#228be6',
+    secondary: '#40c057',
+    background: '#ffffff',
+    text: '#212529',
+    error: '#fa5252',
+    success: '#40c057',
+    warning: '#fab005'
   },
-  "spacing": {
-    "xs": "4px",
-    "sm": "8px",
-    "md": "16px",
-    "lg": "24px",
-    "xl": "32px"
+  spacing: {
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem'
+  },
+  breakpoints: {
+    xs: '576px',
+    sm: '768px',
+    md: '992px',
+    lg: '1200px',
+    xl: '1400px'
   },
   "typography": {
+    "fontFamily": "Inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
     "fontWeightRegular": "400",
     "fontWeightMedium": "500",
     "fontWeightBold": "700"

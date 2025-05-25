@@ -1,10 +1,4 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
-
-const spin = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
+import styled from 'styled-components';
 
 const SpinnerContainer = styled.div`
   display: flex;
@@ -19,13 +13,20 @@ const Spinner = styled.div`
   border: 5px solid #f3f3f3;
   border-top: 5px solid ${({ theme }) => theme.colors.primary};
   border-radius: 50%;
-  animation: ${spin} 1s linear infinite;
+  animation: spin 1s linear infinite;
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 `;
 
-const LoadingSpinner: React.FC = () => (
-  <SpinnerContainer>
-    <Spinner />
-  </SpinnerContainer>
-);
+const LoadingSpinner = () => {
+  return (
+    <SpinnerContainer>
+      <Spinner />
+    </SpinnerContainer>
+  );
+};
 
 export default LoadingSpinner; 

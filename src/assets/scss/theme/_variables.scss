@@ -1,17 +1,49 @@
 @use 'sass:map';
+@use './_colors' as colors;
+@use '../fonts/_fonts' as fonts;
 
-// Base viewport width
-$maxWidth: 1920;
+// Размеры
 $minWidth: 320;
+$maxWidth: 1920;
 
-// Breakpoints
+// Брейкпоинты
 $breakpoints: (
   'sm': 576px,
   'md': 768px,
   'lg': 992px,
   'xl': 1200px,
-  'xxl': 1600px
 );
+
+$font-family: map.get(map.get(fonts.$fonts, 'primary'), 'family');
+
+// Отступы
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem; 
+$spacing-md: 1rem;
+$spacing-lg: 1.5rem;
+$spacing-xl: 2rem;
+
+// Типография
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// Тени
+$shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
+$shadow-large: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+// Переходы
+$transition-fast: 0.15s ease;
+$transition-medium: 0.3s ease;
+$transition-slow: 0.5s ease;
+
+// Радиусы
+$radius-xs: 0.125rem;
+$radius-sm: 0.25rem;
+$radius-md: 0.5rem;
+$radius-lg: 0.75rem;
+$radius-xl: 1rem;
 
 // Mixins
 @mixin media-up($breakpoint) {
@@ -37,25 +69,3 @@ $light-color: #ffffff;
 $dark-color: #141414;
 $text-primary: rgba(0, 0, 0, 0.85);
 $text-secondary: rgba(0, 0, 0, 0.65);
-
-// Отступы
-$spacing-xs: 4px;
-$spacing-sm: 8px;
-$spacing-md: 16px;
-$spacing-lg: 24px;
-$spacing-xl: 32px;
-
-// Типографика
-$font-weight-regular: 400;
-$font-weight-medium: 500;
-$font-weight-bold: 700;
-
-// Тени
-$shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
-$shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
-$shadow-large: 0 8px 16px rgba(0, 0, 0, 0.1);
-
-// Переходы
-$transition-fast: all 0.2s ease;
-$transition-medium: all 0.3s ease;
-$transition-slow: all 0.5s ease; 

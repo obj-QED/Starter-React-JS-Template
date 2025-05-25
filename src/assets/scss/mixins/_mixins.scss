@@ -1,6 +1,9 @@
 @use 'sass:math';
 @use 'sass:list';
-@use '@/assets/scss/theme/variables' as *;
+
+// Размеры
+$minWidth: 320;
+$maxWidth: 1920;
 
 @mixin size($pcSize, $mobSize) {
   $addSize: $pcSize - $mobSize;
@@ -17,4 +20,52 @@
   @if $color != null {
     color: $color;
   }
+}
+
+// Миксин для флекс-контейнера
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+// Миксин для центрирования
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Миксин для абсолютного позиционирования
+@mixin absolute($top: auto, $right: auto, $bottom: auto, $left: auto) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+}
+
+// Миксин для медиа-запросов
+@mixin media($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (min-width: 576px) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (min-width: 768px) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (min-width: 992px) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: 1200px) { @content; }
+  }
+}
+
+// Миксин для теней
+@mixin shadow($size: 'medium') {
+  box-shadow: var(--shadows-#{$size});
+}
+
+// Миксин для переходов
+@mixin transition($property: all, $duration: 'medium') {
+  transition: $property var(--transitions-#{$duration});
 }
