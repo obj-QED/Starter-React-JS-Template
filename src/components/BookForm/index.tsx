@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { TextInput, NumberInput, Textarea, Button, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { Book, CreateBookDto } from '@/types/book';
@@ -9,7 +9,7 @@ interface BookFormProps {
   onCancel: () => void;
 }
 
-export const BookForm: React.FC<BookFormProps> = ({
+const BookForm: React.FC<BookFormProps> = memo(({
   initialValues,
   onSubmit,
   onCancel,
@@ -30,8 +30,16 @@ export const BookForm: React.FC<BookFormProps> = ({
     },
   });
 
+  const handleSubmit = useCallback((values: CreateBookDto) => {
+    onSubmit(values);
+  }, [onSubmit]);
+
+  const handleCancel = useCallback(() => {
+    onCancel();
+  }, [onCancel]);
+
   return (
-    <form onSubmit={form.onSubmit(onSubmit)}>
+    <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <TextInput
           label="Название"
@@ -60,11 +68,15 @@ export const BookForm: React.FC<BookFormProps> = ({
           <Button type="submit" color="blue">
             {initialValues ? 'Сохранить' : 'Создать'}
           </Button>
-          <Button variant="outline" onClick={onCancel}>
+          <Button variant="outline" onClick={handleCancel}>
             Отмена
           </Button>
         </Button.Group>
       </Stack>
     </form>
   );
-}; 
+});
+
+BookForm.displayName = 'BookForm';
+
+export { BookForm }; 

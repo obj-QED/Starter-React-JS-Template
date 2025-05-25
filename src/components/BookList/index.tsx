@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useCallback, memo } from 'react';
 import { Table, TextInput, Button, Group, SimpleGrid, Card, Text, useMantineTheme, Alert } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useQuery } from '@tanstack/react-query';
@@ -15,7 +15,7 @@ interface BookListProps {
 type SortField = 'title' | 'author' | 'year' | null;
 type SortOrder = 'asc' | 'desc';
 
-export const BookList: React.FC<BookListProps> = ({ onEdit, onDelete, onView }) => {
+const BookList: React.FC<BookListProps> = memo(({ onEdit, onDelete, onView }) => {
   const [search, setSearch] = React.useState('');
   const [sortField, setSortField] = React.useState<SortField>(null);
   const [sortOrder, setSortOrder] = React.useState<SortOrder>('asc');
@@ -27,46 +27,49 @@ export const BookList: React.FC<BookListProps> = ({ onEdit, onDelete, onView }) 
     queryFn: booksApi.getAll,
   });
 
-  const filteredBooks = books
-    .filter((book: Book) => {
-      const searchLower = search.toLowerCase();
-      return (
-        book.title.toLowerCase().includes(searchLower) ||
-        book.author.toLowerCase().includes(searchLower) ||
-        book.year.toString().includes(searchLower)
-      );
-    })
-    .sort((a: Book, b: Book) => {
-      if (!sortField) return 0;
-      
-      const aValue = a[sortField];
-      const bValue = b[sortField];
-      
-      if (sortOrder === 'asc') {
-        return aValue > bValue ? 1 : -1;
-      }
-      return aValue < bValue ? 1 : -1;
-    });
-
-  const handleSort = (field: SortField) => {
+  const handleSort = useCallback((field: SortField) => {
     if (sortField === field) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     } else {
       setSortField(field);
       setSortOrder('asc');
     }
-  };
+  }, [sortField, sortOrder]);
 
-  const getSortIndicator = (field: SortField) => {
+  const getSortIndicator = useCallback((field: SortField) => {
     if (sortField !== field) return ' ↕';
     return sortOrder === 'asc' ? ' ↑' : ' ↓';
-  };
+  }, [sortField, sortOrder]);
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
+  const filteredBooks = useMemo(() => 
+    books
+      .filter((book: Book) => {
+        const searchLower = search.toLowerCase();
+        return (
+          book.title.toLowerCase().includes(searchLower) ||
+          book.author.toLowerCase().includes(searchLower) ||
+          book.year.toString().includes(searchLower)
+        );
+      })
+      .sort((a: Book, b: Book) => {
+        if (!sortField) return 0;
+        
+        const aValue = a[sortField];
+        const bValue = b[sortField];
+        
+        if (sortOrder === 'asc') {
+          return aValue > bValue ? 1 : -1;
+        }
+        return aValue < bValue ? 1 : -1;
+      }),
+    [books, search, sortField, sortOrder]
+  );
 
-  const renderMobileView = () => (
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  }, []);
+
+  const renderMobileView = useCallback(() => (
     <SimpleGrid cols={1} spacing="md">
       {filteredBooks.map((book: Book) => (
         <Card key={book.id} shadow="sm" p="sm">
@@ -93,9 +96,9 @@ export const BookList: React.FC<BookListProps> = ({ onEdit, onDelete, onView }) 
         </Card>
       ))}
     </SimpleGrid>
-  );
+  ), [filteredBooks, onView, onEdit, onDelete]);
 
-  const renderDesktopView = () => (
+  const renderDesktopView = useCallback(() => (
     <Table captionSide="bottom">
       <thead>
         <tr>
@@ -149,7 +152,11 @@ export const BookList: React.FC<BookListProps> = ({ onEdit, onDelete, onView }) 
         ))}
       </tbody>
     </Table>
-  );
+  ), [filteredBooks, handleSort, getSortIndicator, sortField, onView, onEdit, onDelete]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div>
@@ -157,7 +164,7 @@ export const BookList: React.FC<BookListProps> = ({ onEdit, onDelete, onView }) 
         <TextInput
           placeholder="Поиск по названию, автору или году"
           value={search}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+          onChange={handleSearchChange}
           style={{ flex: 1 }}
         />
       </Group>
@@ -177,4 +184,8 @@ export const BookList: React.FC<BookListProps> = ({ onEdit, onDelete, onView }) 
       )}
     </div>
   );
-};
+});
+
+BookList.displayName = 'BookList';
+
+export { BookList };

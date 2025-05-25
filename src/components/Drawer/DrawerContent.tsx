@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { DrawerContentProps } from './types';
 import { ContentContainer } from './styled';
 
-const DrawerContent: React.FC<DrawerContentProps> = ({ title, description, items }) => {
+const DrawerContent: React.FC<DrawerContentProps> = memo(({ title, description, items }) => {
   return (
     <ContentContainer>
       <h2>{title}</h2>
@@ -14,6 +14,8 @@ const DrawerContent: React.FC<DrawerContentProps> = ({ title, description, items
       </ul>
     </ContentContainer>
   );
-};
+});
+
+DrawerContent.displayName = 'DrawerContent';
 
 export default DrawerContent; 
