@@ -1,5 +1,5 @@
 // Импортируем все стили
-@use 'theme/index';
-@use 'mixins/mixins';
-@use 'fonts/fonts';
-@use 'libs';
+@forward 'theme/index';
+@forward 'mixins/mixins';
+@forward 'fonts/fonts';
+@forward 'libs';
