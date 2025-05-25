@@ -25,20 +25,19 @@ const ICON_SIZE = {
 export const ThemeToggle = memo(function ThemeToggle() {
   const { currentTheme, setTheme } = useTheme();
 
-  const handleThemeChange = useCallback((theme: ThemeType) => {
-    setTheme(theme);
-  }, [setTheme]);
+  const handleThemeChange = useCallback(
+    (theme: ThemeType) => {
+      setTheme(theme);
+    },
+    [setTheme],
+  );
 
-  const CurrentIcon = THEME_OPTIONS.find(option => option.value === currentTheme)?.icon || IconDeviceDesktop;
+  const CurrentIcon = THEME_OPTIONS.find((option) => option.value === currentTheme)?.icon || IconDeviceDesktop;
 
   return (
     <Menu shadow="md" width={200}>
       <Menu.Target>
-        <ActionIcon 
-          variant="outline" 
-          size="lg" 
-          aria-label="Переключить тему"
-        >
+        <ActionIcon variant="outline" size="lg" aria-label="Переключить тему">
           <CurrentIcon style={{ width: ICON_SIZE.button, height: ICON_SIZE.button }} />
         </ActionIcon>
       </Menu.Target>
