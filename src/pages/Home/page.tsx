@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { Container, Title, Button, Modal, Paper } from '@mantine/core';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { notifications } from '@mantine/notifications';
@@ -7,7 +7,7 @@ import { BookForm } from '@/components/BookForm';
 import { booksApi } from '@/api/books';
 import { Book, CreateBookDto } from '@/types/book';
 
-const HomePage: React.FC = () => {
+const HomePage: React.FC = memo(() => {
   const queryClient = useQueryClient();
   const [isCreateModalOpen, setIsCreateModalOpen] = React.useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
@@ -52,21 +52,60 @@ const HomePage: React.FC = () => {
     },
   });
 
-  const handleCreate = (values: CreateBookDto) => {
+  const handleCreate = useCallback((values: CreateBookDto) => {
     createMutation.mutate(values);
-  };
+  }, [createMutation]);
 
-  const handleEdit = (values: CreateBookDto) => {
+  const handleEdit = useCallback((values: CreateBookDto) => {
     if (selectedBook) {
       updateMutation.mutate({ ...values, id: selectedBook.id });
     }
-  };
+  }, [selectedBook, updateMutation]);
 
-  const handleDelete = (id: string) => {
+  const handleDelete = useCallback((id: string) => {
     if (window.confirm('Вы уверены, что хотите удалить эту книгу?')) {
       deleteMutation.mutate(id);
     }
-  };
+  }, [deleteMutation]);
+
+  const handleCreateModalOpen = useCallback(() => {
+    setIsCreateModalOpen(true);
+  }, []);
+
+  const handleCreateModalClose = useCallback(() => {
+    setIsCreateModalOpen(false);
+  }, []);
+
+  const handleEditModalOpen = useCallback((book: Book) => {
+    setSelectedBook(book);
+    setIsEditModalOpen(true);
+  }, []);
+
+  const handleEditModalClose = useCallback(() => {
+    setIsEditModalOpen(false);
+  }, []);
+
+  const handleViewModalOpen = useCallback((book: Book) => {
+    setSelectedBook(book);
+    setIsViewModalOpen(true);
+  }, []);
+
+  const handleViewModalClose = useCallback(() => {
+    setIsViewModalOpen(false);
+  }, []);
+
+  const bookViewContent = useMemo(() => {
+    if (!selectedBook) return null;
+    
+    return (
+      <Paper p="md">
+        <h3>{selectedBook.title}</h3>
+        <p>Автор: {selectedBook.author}</p>
+        <p>Год публикации: {selectedBook.year}</p>
+        <p>Описание: {selectedBook.description}</p>
+      </Paper>
+    );
+  }, [selectedBook]);
 
   return (
     <Container size="xl" p={0}>
@@ -74,42 +113,31 @@ const HomePage: React.FC = () => {
         Управление книгами
       </Title>
 
-      <Button onClick={() => setIsCreateModalOpen(true)} mb="xl">
+      <Button onClick={handleCreateModalOpen} mb="xl">
         Добавить книгу
       </Button>
 
       <BookList
-        onEdit={(book) => {
-          setSelectedBook(book);
-          setIsEditModalOpen(true);
-        }}
+        onEdit={handleEditModalOpen}
         onDelete={handleDelete}
-        onView={(book) => {
-          setSelectedBook(book);
-          setIsViewModalOpen(true);
-        }}
+        onView={handleViewModalOpen}
       />
 
-      <Modal opened={isCreateModalOpen} onClose={() => setIsCreateModalOpen(false)} title="Добавить книгу">
-        <BookForm onSubmit={handleCreate} onCancel={() => setIsCreateModalOpen(false)} />
+      <Modal opened={isCreateModalOpen} onClose={handleCreateModalClose} title="Добавить книгу">
+        <BookForm onSubmit={handleCreate} onCancel={handleCreateModalClose} />
       </Modal>
 
-      <Modal opened={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} title="Редактировать книгу">
-        {selectedBook && <BookForm initialValues={selectedBook} onSubmit={handleEdit} onCancel={() => setIsEditModalOpen(false)} />}
+      <Modal opened={isEditModalOpen} onClose={handleEditModalClose} title="Редактировать книгу">
+        {selectedBook && <BookForm initialValues={selectedBook} onSubmit={handleEdit} onCancel={handleEditModalClose} />}
       </Modal>
 
-      <Modal opened={isViewModalOpen} onClose={() => setIsViewModalOpen(false)} title="Информация о книге">
-        {selectedBook && (
-          <Paper p="md">
-            <h3>{selectedBook.title}</h3>
-            <p>Автор: {selectedBook.author}</p>
-            <p>Год публикации: {selectedBook.year}</p>
-            <p>Описание: {selectedBook.description}</p>
-          </Paper>
-        )}
+      <Modal opened={isViewModalOpen} onClose={handleViewModalClose} title="Информация о книге">
+        {bookViewContent}
       </Modal>
     </Container>
   );
-};
+});
+
+HomePage.displayName = 'HomePage';
 
 export default HomePage;
