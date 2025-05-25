@@ -15,6 +15,12 @@ interface BookListProps {
 type SortField = 'title' | 'author' | 'year' | null;
 type SortOrder = 'asc' | 'desc';
 
+const SORT_INDICATORS = {
+  asc: ' ↑',
+  desc: ' ↓',
+  default: ' ↕',
+} as const;
+
 const BookList: React.FC<BookListProps> = memo(({ onEdit, onDelete, onView }) => {
   const [search, setSearch] = React.useState('');
   const [sortField, setSortField] = React.useState<SortField>(null);
@@ -28,138 +34,149 @@ const BookList: React.FC<BookListProps> = memo(({ onEdit, onDelete, onView }) =>
   });
 
   const handleSort = useCallback((field: SortField) => {
-    if (sortField === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
+    setSortField((prevField) => {
+      if (prevField === field) {
+        setSortOrder((prevOrder) => prevOrder === 'asc' ? 'desc' : 'asc');
+        return field;
+      }
       setSortOrder('asc');
-    }
-  }, [sortField, sortOrder]);
+      return field;
+    });
+  }, []);
 
   const getSortIndicator = useCallback((field: SortField) => {
-    if (sortField !== field) return ' ↕';
-    return sortOrder === 'asc' ? ' ↑' : ' ↓';
+    if (sortField !== field) return SORT_INDICATORS.default;
+    return SORT_INDICATORS[sortOrder];
   }, [sortField, sortOrder]);
 
-  const filteredBooks = useMemo(() => 
-    books
-      .filter((book: Book) => {
-        const searchLower = search.toLowerCase();
-        return (
-          book.title.toLowerCase().includes(searchLower) ||
-          book.author.toLowerCase().includes(searchLower) ||
-          book.year.toString().includes(searchLower)
-        );
-      })
+  const filteredBooks = useMemo(() => {
+    const searchLower = search.toLowerCase();
+    
+    return books
+      .filter((book: Book) => (
+        book.title.toLowerCase().includes(searchLower) ||
+        book.author.toLowerCase().includes(searchLower) ||
+        book.year.toString().includes(searchLower)
+      ))
       .sort((a: Book, b: Book) => {
         if (!sortField) return 0;
         
         const aValue = a[sortField];
         const bValue = b[sortField];
         
-        if (sortOrder === 'asc') {
-          return aValue > bValue ? 1 : -1;
-        }
-        return aValue < bValue ? 1 : -1;
-      }),
-    [books, search, sortField, sortOrder]
-  );
+        return sortOrder === 'asc' 
+          ? aValue > bValue ? 1 : -1
+          : aValue < bValue ? 1 : -1;
+      });
+  }, [books, search, sortField, sortOrder]);
 
   const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   }, []);
 
+  const renderBookActions = useCallback((book: Book) => (
+    <Group>
+      <Button size="xs" onClick={() => onView(book)}>
+        Просмотр
+      </Button>
+      <Button size="xs" onClick={() => onEdit(book)}>
+        Редактировать
+      </Button>
+      <Button size="xs" color="red" onClick={() => onDelete(book.id)}>
+        Удалить
+      </Button>
+    </Group>
+  ), [onView, onEdit, onDelete]);
+
+  const renderBookCard = useCallback((book: Book) => (
+    <Card key={book.id} shadow="sm" p="sm">
+      <Text fw={500} size="lg" mb="xs">
+        {book.title}
+      </Text>
+      <Text size="sm" c="gray.7" mb="xs">
+        Автор: {book.author}
+      </Text>
+      <Text size="sm" c="gray.7" mb="md">
+        Год: {book.year}
+      </Text>
+      {renderBookActions(book)}
+    </Card>
+  ), [renderBookActions]);
+
+  const renderBookRow = useCallback((book: Book) => (
+    <tr key={book.id}>
+      <td>{book.title}</td>
+      <td>{book.author}</td>
+      <td>{book.year}</td>
+      <td style={{ textAlign: 'right' }}>
+        <Group justify="flex-end">
+          {renderBookActions(book)}
+        </Group>
+      </td>
+    </tr>
+  ), [renderBookActions]);
+
+  const renderTableHeader = useCallback(() => (
+    <tr>
+      {(['title', 'author', 'year'] as const).map((field) => (
+        <th key={field} onClick={() => handleSort(field)} style={{ cursor: 'pointer' }}>
+          <Group gap={4}>
+            {field === 'title' ? 'Название' : field === 'author' ? 'Автор' : 'Год'}
+            <Text span c={sortField === field ? 'blue' : 'gray'}>
+              {getSortIndicator(field)}
+            </Text>
+          </Group>
+        </th>
+      ))}
+      <th style={{ textAlign: 'right' }}>Действия</th>
+    </tr>
+  ), [handleSort, getSortIndicator, sortField]);
+
   const renderMobileView = useCallback(() => (
     <SimpleGrid cols={1} spacing="md">
-      {filteredBooks.map((book: Book) => (
-        <Card key={book.id} shadow="sm" p="sm">
-          <Text fw={500} size="lg" mb="xs">
-            {book.title}
-          </Text>
-          <Text size="sm" c="gray.7" mb="xs">
-            Автор: {book.author}
-          </Text>
-          <Text size="sm" c="gray.7" mb="md">
-            Год: {book.year}
-          </Text>
-          <Group>
-            <Button size="xs" onClick={() => onView(book)}>
-              Просмотр
-            </Button>
-            <Button size="xs" onClick={() => onEdit(book)}>
-              Редактировать
-            </Button>
-            <Button size="xs" color="red" onClick={() => onDelete(book.id)}>
-              Удалить
-            </Button>
-          </Group>
-        </Card>
-      ))}
+      {filteredBooks.map(renderBookCard)}
     </SimpleGrid>
-  ), [filteredBooks, onView, onEdit, onDelete]);
+  ), [filteredBooks, renderBookCard]);
 
   const renderDesktopView = useCallback(() => (
     <Table captionSide="bottom">
       <thead>
-        <tr>
-          <th onClick={() => handleSort('title')} style={{ cursor: 'pointer' }}>
-            <Group gap={4}>
-              Название
-              <Text span c={sortField === 'title' ? 'blue' : 'gray'}>
-                {getSortIndicator('title')}
-              </Text>
-            </Group>
-          </th>
-          <th onClick={() => handleSort('author')} style={{ cursor: 'pointer' }}>
-            <Group gap={4}>
-              Автор
-              <Text span c={sortField === 'author' ? 'blue' : 'gray'}>
-                {getSortIndicator('author')}
-              </Text>
-            </Group>
-          </th>
-          <th onClick={() => handleSort('year')} style={{ cursor: 'pointer' }}>
-            <Group gap={4}>
-              Год
-              <Text span c={sortField === 'year' ? 'blue' : 'gray'}>
-                {getSortIndicator('year')}
-              </Text>
-            </Group>
-          </th>
-          <th style={{ textAlign: 'right' }}>Действия</th>
-        </tr>
+        {renderTableHeader()}
       </thead>
       <tbody>
-        {filteredBooks.map((book: Book) => (
-          <tr key={book.id}>
-            <td>{book.title}</td>
-            <td>{book.author}</td>
-            <td>{book.year}</td>
-            <td style={{ textAlign: 'right' }}>
-              <Group justify="flex-end">
-                <Button size="xs" onClick={() => onView(book)}>
-                  Просмотр
-                </Button>
-                <Button size="xs" onClick={() => onEdit(book)}>
-                  Редактировать
-                </Button>
-                <Button size="xs" color="red" onClick={() => onDelete(book.id)}>
-                  Удалить
-                </Button>
-              </Group>
-            </td>
-          </tr>
-        ))}
+        {filteredBooks.map(renderBookRow)}
       </tbody>
     </Table>
-  ), [filteredBooks, handleSort, getSortIndicator, sortField, onView, onEdit, onDelete]);
+  ), [filteredBooks, renderTableHeader, renderBookRow]);
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
+  const renderContent = useMemo(() => {
+    if (books.length === 0) {
+      return (
+        <Alert title="Нет книг" color="blue">
+          В библиотеке пока нет книг. Добавьте первую книгу, нажав кнопку "Добавить книгу".
+        </Alert>
+      );
+    }
 
-  return (
-    <div>
+    if (filteredBooks.length === 0) {
+      return (
+        <Alert title="Ничего не найдено" color="yellow">
+          По вашему запросу "{search}" ничего не найдено. Попробуйте изменить параметры поиска.
+        </Alert>
+      );
+    }
+
+    return (
+      <Table.ScrollContainer minWidth="100%" maxHeight={300} p="xs">
+        {isMobile ? renderMobileView() : renderDesktopView()}
+      </Table.ScrollContainer>
+    );
+  }, [books.length, filteredBooks.length, search, isMobile, renderMobileView, renderDesktopView]);
+
+  const renderSearch = useMemo(() => {
+    if (books.length === 0) return null;
+
+    return (
       <Group mb="md">
         <TextInput
           placeholder="Поиск по названию, автору или году"
@@ -168,20 +185,17 @@ const BookList: React.FC<BookListProps> = memo(({ onEdit, onDelete, onView }) =>
           style={{ flex: 1 }}
         />
       </Group>
+    );
+  }, [books.length, search, handleSearchChange]);
 
-      {books.length === 0 ? (
-        <Alert title="Нет книг" color="blue">
-          В библиотеке пока нет книг. Добавьте первую книгу, нажав кнопку "Добавить книгу".
-        </Alert>
-      ) : filteredBooks.length === 0 ? (
-        <Alert title="Ничего не найдено" color="yellow">
-          По вашему запросу "{search}" ничего не найдено. Попробуйте изменить параметры поиска.
-        </Alert>
-      ) : (
-        <Table.ScrollContainer minWidth="100%" maxHeight={300} p="xs">
-          {isMobile ? renderMobileView() : renderDesktopView()}
-        </Table.ScrollContainer>
-      )}
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  return (
+    <div>
+      {renderSearch}
+      {renderContent}
     </div>
   );
 });

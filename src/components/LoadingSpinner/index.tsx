@@ -3,7 +3,7 @@ import { Center, Loader } from '@mantine/core';
 
 const LoadingSpinner: React.FC = memo(() => {
   return (
-    <Center h="100vh">
+    <Center mih="50dvh" h="100%">
       <Loader size="xl" />
     </Center>
   );
