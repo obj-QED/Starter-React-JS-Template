@@ -22,6 +22,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.cursor/rules/default-rules.mdc
+.cursor/
 .cursorrules
-.cursor/rules/cursor-rules.mdc
