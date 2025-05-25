@@ -8,12 +8,13 @@ import Home from './pages/Home/page';
 import CodingSession from './pages/CodingSession/page';
 import { theme } from './utils/generate-styled-theme';
 import LoadingSpinner from './components/LoadingSpinner';
+import { ThemeToggle } from './elements/ThemeToggle/ThemeToggle';
 
 const router = {
   future: {
     v7_startTransition: true,
-    v7_relativeSplatPath: true
-  }
+    v7_relativeSplatPath: true,
+  },
 };
 
 const App: React.FC = () => {
@@ -22,15 +23,12 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
       <Router future={router.future}>
-        <AppShell
-          header={{ height: 60 }}
-          navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }}
-          padding="md"
-        >
+        <AppShell header={{ height: 60 }} navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: !opened } }} padding="md">
           <AppShell.Header>
             <Group h="100%" px="md">
               <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
               <Title order={1}>React App</Title>
+              <ThemeToggle />
             </Group>
           </AppShell.Header>
 

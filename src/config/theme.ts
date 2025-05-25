@@ -1,5 +1,6 @@
-import { createTheme, MantineColorsTuple } from '@mantine/core';
+import { createTheme, MantineColorsTuple, MantineColorShade } from '@mantine/core';
 import { theme as styledTheme } from '@/utils/generate-styled-theme';
+import { useMantineColorScheme } from '@mantine/core';
 
 // Определяем цвета
 const colors: Record<string, MantineColorsTuple> = {
@@ -7,42 +8,78 @@ const colors: Record<string, MantineColorsTuple> = {
   gray: ['#F5F5F5', '#E8E8E8', '#D9D9D9', '#BFBFBF', '#8C8C8C', '#595959', '#434343', '#262626', '#1F1F1F', '#141414'],
 };
 
-// Создаем тему
-export const theme = createTheme({
-  // Основные настройки
-  primaryColor: 'blue',
-  primaryShade: 6,
+// Базовые настройки темы
+const baseTheme = {
+  primaryShade: 6 as MantineColorShade,
   ...(styledTheme.typography.fontFamily && {
     fontFamily: 'var(--font-primary)',
   }),
   fontFamilyMonospace: 'Monaco, Courier, monospace',
-  // Цвета
   colors,
-
-  // Размеры
-  defaultRadius: 'var(--radius-sm)',
-  radius: {
-    xs: 'var(--radius-xs)',
-    sm: 'var(--radius-sm)',
-    md: 'var(--radius-md)',
-    lg: 'var(--radius-lg)',
-    xl: 'var(--radius-xl)',
-  },
-
   ...(styledTheme.spacing && {
     spacing: Object.fromEntries(Object.entries(styledTheme.spacing).map(([key]) => [key, `var(--spacing-${key})`])),
   }),
-
   ...(styledTheme.shadows && {
     shadows: Object.fromEntries(Object.entries(styledTheme.shadows).map(([key]) => [key, `var(--shadow-${key})`])),
   }),
-
-  // Переходы
   transitionTimingFunction: 'ease',
   transitionDuration: '200ms',
-
-  // Другие настройки
   respectReducedMotion: true,
-  cursorType: 'pointer',
-  focusRing: 'auto',
+  cursorType: 'pointer' as const,
+  focusRing: 'auto' as const,
+};
+
+// Светлая тема
+export const lightTheme = createTheme({
+  ...baseTheme,
+  white: '#FFFFFF',
+  black: '#141414',
+  defaultGradient: {
+    from: 'blue.4',
+    to: 'blue.6',
+    deg: 45,
+  },
 });
+
+// Темная тема
+export const darkTheme = createTheme({
+  ...baseTheme,
+  white: '#141414',
+  black: '#FFFFFF',
+  defaultGradient: {
+    from: 'blue.6',
+    to: 'blue.8',
+    deg: 45,
+  },
+});
+
+// Экспортируем основную тему (по умолчанию светлая)
+export const theme = lightTheme;
+
+export function useTheme() {
+  const { colorScheme, setColorScheme, toggleColorScheme } = useMantineColorScheme();
+
+  // Функция для определения системной темы
+  const getSystemTheme = () => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'light';
+  };
+
+  // Функция для установки темы
+  const setTheme = (theme: 'light' | 'dark' | 'auto') => {
+    if (theme === 'auto') {
+      setColorScheme(getSystemTheme());
+    } else {
+      setColorScheme(theme);
+    }
+  };
+
+  return {
+    isDark: colorScheme === 'dark',
+    toggleTheme: toggleColorScheme,
+    setTheme,
+    currentTheme: colorScheme,
+  };
+}
