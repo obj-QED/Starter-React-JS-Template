@@ -1,24 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# React App
 
-## Getting Started
+Это React приложение с поддержкой Mantine UI и Styled Components.
 
-First, run the development server:
+## Настройка
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Переменные окружения
+
+Создайте файл `.env` в корне проекта со следующими настройками:
+
+```env
+# Настройки приложения
+VITE_API_URL=http://localhost:3000
+
+# Настройки темы
+# true - использовать Mantine тему для цветов
+# false - использовать Styled Components тему для цветов
+VITE_USE_MANTINE_THEME=true
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Запуск
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Установка зависимостей
+yarn install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Запуск в режиме разработки
+yarn dev
+```
+
+Откройте [http://localhost:3000](http://localhost:3000) в браузере.
+
+## Особенности
+
+- **Mantine UI** - основная UI библиотека
+- **Styled Components** - для кастомных стилей
+- **TypeScript** - типизация
+- **SCSS** - для глобальных стилей
+- **React Router** - маршрутизация
+- **Единая система управления темами** - все настройки в `src/config/theme.ts`
+
+## Структура проекта
+
+```
+src/
+├── components/     # Переиспользуемые компоненты
+├── pages/         # Страницы приложения
+├── config/        # Конфигурация (включая темы)
+├── assets/        # Статические ресурсы
+└── utils/         # Утилиты
+```
+
+## Управление темами
+
+Все настройки темы находятся в `src/config/theme.ts`:
+
+- `themeConfig` - конфигурация приложения и переменные окружения
+- `lightTheme` / `darkTheme` - Mantine темы
+- `getTitleColor()` - функция для получения цвета заголовка
+- `useTheme()` - хук для управления темами
 
 ## Learn More
 

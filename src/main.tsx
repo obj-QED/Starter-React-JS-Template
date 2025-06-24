@@ -6,10 +6,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 import { theme } from '@/config/theme';
 
-// Стили Mantine (только используемые компоненты)
-import '@mantine/core/styles.css';
-import '@mantine/notifications/styles.css';
-
 // Наши стили
 import '@/assets/scss/index.scss';
 
@@ -25,13 +21,32 @@ const queryClient = new QueryClient({
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find the root element');
 
-ReactDOM.createRoot(rootElement).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
+// Проверяем, нужно ли использовать Mantine тему
+const useMantineTheme = import.meta.env.VITE_USE_MANTINE_THEME === 'true';
+
+// Загружаем стили Mantine только если тема включена
+if (useMantineTheme) {
+  import('@mantine/core/styles.css');
+  import('@mantine/notifications/styles.css');
+}
+
+const AppWrapper = () => {
+  if (useMantineTheme) {
+    return (
       <MantineProvider theme={theme}>
         <Notifications />
         <App />
       </MantineProvider>
+    );
+  }
+  
+  return <App />;
+};
+
+ReactDOM.createRoot(rootElement).render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <AppWrapper />
     </QueryClientProvider>
   </React.StrictMode>
 );

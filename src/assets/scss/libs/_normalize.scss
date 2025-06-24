@@ -15,14 +15,25 @@ html {
 
 body {
   margin: 0;
-  font-family: var(--mantine-font-family);
-  font-size: var(--mantine-font-size-md);
-  font-weight: var(--mantine-font-weight-regular);
-  line-height: var(--mantine-line-height);
-  color: var(--mantine-color-text);
-  background-color: var(--mantine-color-body);
+  font-family: var(--font-primary, 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif');
+  font-size: var(--theme-font-size-md, 1rem);
+  font-weight: var(--theme-font-weight-regular, 400);
+  line-height: var(--theme-line-height, 1.5);
+  color: var(--theme-color-text, #212529);
+  background-color: var(--theme-color-body, #ffffff);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  // Классы для тем (когда Mantine отключен)
+  &.light-theme {
+    background-color: #ffffff;
+    color: #212529;
+  }
+  
+  &.dark-theme {
+    background-color: #141414;
+    color: #ffffff;
+  }
 }
 
 img {
@@ -51,7 +62,7 @@ button {
 }
 
 a {
-  color: var(--mantine-color-primary);
+  color: var(--mantine-color-primary, #1aa1e0);
   text-decoration: none;
   
   &:hover {

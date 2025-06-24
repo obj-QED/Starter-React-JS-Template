@@ -22,4 +22,4 @@ export interface LayoutProps extends BaseComponentProps {
 export interface PageProps extends BaseComponentProps {
   title?: string;
   description?: string;
-} 
+}
