@@ -44,8 +44,8 @@ $fonts: (
 }
 
 // Определение переменных для шрифтов
-:root {
-  --font-primary: @include font-family('primary');
-}
+$primary-font-family: map.get(map.get($fonts, 'primary'), 'family');
 
-$font-family: var(--font-primary);
+:root {
+  --font-primary: #{$primary-font-family};
+}
