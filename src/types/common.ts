@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 // Общие типы для styled-components
 export interface BaseStyledProps {

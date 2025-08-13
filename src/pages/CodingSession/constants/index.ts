@@ -1,8 +1,9 @@
-import { Section } from '../types';
+import type { Section } from '../types';
 
 export const FUNCTIONALITY_SECTION: Section = {
   title: 'Базовая функциональность',
-  description: 'В течение этого времени необходимо реализовать следующие компоненты и функции:',
+  description:
+    'В течение этого времени необходимо реализовать следующие компоненты и функции:',
   items: [
     { text: 'Фиксированная главная навигация (React Router)' },
     { text: 'Прокручиваемый контент' },

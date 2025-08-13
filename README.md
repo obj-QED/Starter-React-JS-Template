@@ -16,6 +16,11 @@ VITE_API_URL=http://localhost:3000
 # true - использовать Mantine тему для цветов
 # false - использовать Styled Components тему для цветов
 VITE_USE_MANTINE_THEME=true
+
+# Настройки Styled Components
+# true - включить ThemeProvider для Styled Components
+# false - отключить ThemeProvider для Styled Components
+VITE_USE_STYLED_COMPONENTS=true
 ```
 
 ### Запуск
@@ -30,10 +35,32 @@ yarn dev
 
 Откройте [http://localhost:3000](http://localhost:3000) в браузере.
 
+## Вариации приложений
+
+Приложение поддерживает несколько вариаций в зависимости от настроек:
+
+### 1. **Default** (VITE_USE_MANTINE_THEME=false, VITE_USE_STYLED_COMPONENTS=false)
+
+- Простое приложение без Mantine
+- Без styled-components
+- Только SCSS стили
+
+### 2. **Styled Components** (VITE_USE_MANTINE_THEME=false, VITE_USE_STYLED_COMPONENTS=true)
+
+- Простое приложение без Mantine
+- С styled-components и ThemeProvider
+- SCSS стили
+
+### 3. **Mantine** (VITE_USE_MANTINE_THEME=true)
+
+- Приложение с Mantine UI компонентами
+- Styled-components опционально (VITE_USE_STYLED_COMPONENTS)
+- SCSS стили
+
 ## Особенности
 
-- **Mantine UI** - основная UI библиотека
-- **Styled Components** - для кастомных стилей
+- **Mantine UI** - основная UI библиотека (опционально)
+- **Styled Components** - для кастомных стилей (опционально)
 - **TypeScript** - типизация
 - **SCSS** - для глобальных стилей
 - **React Router** - маршрутизация
@@ -43,20 +70,58 @@ yarn dev
 
 ```
 src/
-├── components/     # Переиспользуемые компоненты
+├── applications/  # Вариации приложений
+│   ├── index.tsx  # Главный файл выбора вариации
+│   ├── default/   # Простое приложение
+│   ├── mantine/   # Mantine приложение
+│   └── styled-components/ # Styled Components приложение
+├── components/    # Переиспользуемые компоненты
 ├── pages/         # Страницы приложения
 ├── config/        # Конфигурация (включая темы)
 ├── assets/        # Статические ресурсы
-└── utils/         # Утилиты
+│   ├── scss/      # Глобальные SCSS стили
+│   └── styles/    # Styled Components стили
+│       └── components/ # Styled Components
+├── components/    # Переиспользуемые компоненты
+│   └── */         # Каждый компонент содержит свои стили
+│       ├── style.scss      # Обычные SCSS
+│       ├── styles.module.scss # CSS Modules
+│       └── README.md       # Документация
+├── utils/         # Утилиты
+├── types/         # Типы TypeScript
+└── main.tsx       # Точка входа приложения
 ```
 
-## Управление темами
+## Архитектура приложения
+
+### Точка входа (`src/main.tsx`)
+
+- Инициализация React Query
+- Импорт SCSS стилей
+
+### Система вариаций (`src/applications/`)
+
+- **`index.tsx`** - главный файл выбора вариации на основе переменных окружения
+- **`default/`** - простое приложение без Mantine
+- **`mantine/`** - приложение с Mantine UI (само настраивает провайдеры)
+- **`styled-components/`** - приложение с styled-components
+
+### Система стилей
+
+- **Компонентные стили** - каждый компонент содержит свои стили
+  - `style.scss` - обычные SCSS стили
+  - `styles.module.scss` - CSS Modules
+  - `*.styled.ts` - styled-components (в `src/assets/styles/components/`)
+- **Глобальные стили** - `src/assets/scss/`
+- **Vite плагин** - автоматически проверяет styled-components при сохранении файлов
+- **Простота использования** - компоненты пишутся в одном стиле, без условной логики
+
+### Управление темами
 
 Все настройки темы находятся в `src/config/theme.ts`:
 
 - `themeConfig` - конфигурация приложения и переменные окружения
 - `lightTheme` / `darkTheme` - Mantine темы
-- `getTitleColor()` - функция для получения цвета заголовка
 - `useTheme()` - хук для управления темами
 
 ## Learn More

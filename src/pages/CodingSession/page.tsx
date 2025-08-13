@@ -1,22 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
+import { memo } from 'react';
 
-const CodingSessionContainer = styled.div`
-  padding: ${({ theme }) => theme.spacing.lg};
-`;
-
-const PageTitle = styled.h1`
-  color: ${({ theme }) => theme.colors.primary};
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
-`;
-
-const CodingSession: React.FC = () => {
+const CodingSession = memo(() => {
   return (
-    <CodingSessionContainer>
-      <PageTitle>Сессия кодинга</PageTitle>
+    <div>
+      <h1>Сессия кодинга</h1>
       <p>Здесь будет ваша сессия кодинга.</p>
-    </CodingSessionContainer>
+    </div>
   );
-};
+});
 
 export default CodingSession;

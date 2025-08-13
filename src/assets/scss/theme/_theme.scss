@@ -38,11 +38,19 @@ $theme: (
     'medium': vars.$transition-medium,
     'slow': vars.$transition-slow,
   ),
+  'theme': (
+    'font-size': vars.$theme-font-size,
+    'font-weight': vars.$theme-font-weight,
+    'line-height': vars.$theme-line-height,
+    'color-text': vars.$theme-color-text,
+    'color-body': vars.$theme-color-body,
+  ),
 );
 
 // Функция для проверки значения
 @function is-valid-value($value) {
-  @return $value != null and $value != '' and $value != 'undefined' and $value != 'null';
+  @return $value != null and $value != '' and $value != 'undefined' and $value
+    != 'null';
 }
 
 // Миксин для применения темы

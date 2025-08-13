@@ -1,6 +1,6 @@
-import sass from 'sass';
 import fs from 'fs';
 import path from 'path';
+import sass from 'sass';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -9,7 +9,10 @@ const __dirname = path.dirname(__filename);
 // Пути к файлам
 const SCSS_THEME_DIR = path.join(__dirname, '../assets/scss/theme');
 const SCSS_THEME_PATH = path.join(SCSS_THEME_DIR, '_theme.scss');
-const OUTPUT_THEME_PATH = path.join(__dirname, '../utils/generate-styled-theme.ts');
+const OUTPUT_THEME_PATH = path.join(
+  __dirname,
+  '../utils/generate-styled-theme.ts'
+);
 
 // Функция для компиляции SCSS
 function compileScss() {
@@ -44,7 +47,12 @@ function convertScssToJs(scssContent) {
         const [, category, prop] = match;
         // Проверяем, что значение не пустое и не undefined
         const cleanValue = value.replace(/['"]/g, '').trim();
-        if (cleanValue && cleanValue !== 'undefined' && cleanValue !== 'null' && cleanValue !== '') {
+        if (
+          cleanValue &&
+          cleanValue !== 'undefined' &&
+          cleanValue !== 'null' &&
+          cleanValue !== ''
+        ) {
           if (!themeObject[category]) {
             themeObject[category] = {};
           }
@@ -88,10 +96,10 @@ function convertTheme() {
     // Компилируем SCSS
     const compiledCss = compileScss();
     if (!compiledCss) return;
-    
+
     // Конвертируем в JavaScript объект
     const themeObject = convertScssToJs(compiledCss);
-    
+
     if (themeObject) {
       // Создаем файл темы
       createThemeFile(themeObject);
@@ -105,4 +113,4 @@ function convertTheme() {
 }
 
 // Запускаем конвертацию
-convertTheme(); 
+convertTheme();

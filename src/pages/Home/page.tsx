@@ -1,21 +1,15 @@
-import styled from 'styled-components';
+import { memo } from 'react';
 
-const HomeContainer = styled.div`
-  padding: ${({ theme }) => theme.spacing.lg};
-`;
+import { LoadingSpinner } from '@/components';
 
-const Title = styled.h1`
-  color: ${({ theme }) => theme.colors.primary};
-  margin-bottom: ${({ theme }) => theme.spacing.lg};
-`;
-
-const Home = () => {
+const Home = memo(() => {
   return (
-    <HomeContainer>
-      <Title>Добро пожаловать!</Title>
+    <div>
+      <LoadingSpinner />
+      <h1>Добро пожаловать!</h1>
       <p>Это главная страница вашего приложения.</p>
-    </HomeContainer>
+    </div>
   );
-};
+});
 
 export default Home;

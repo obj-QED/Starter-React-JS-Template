@@ -38,15 +38,15 @@ const watcher = chokidar.watch(SCSS_DIR, {
 
 // Обработчики событий
 watcher
-  .on('add', (path) => {
+  .on('add', path => {
     console.log(`📝 Файл ${path} добавлен`);
     generateTheme();
   })
-  .on('change', (path) => {
+  .on('change', path => {
     console.log(`📝 Файл ${path} изменен`);
     generateTheme();
   })
-  .on('unlink', (path) => {
+  .on('unlink', path => {
     console.log(`🗑️ Файл ${path} удален`);
     generateTheme();
   })

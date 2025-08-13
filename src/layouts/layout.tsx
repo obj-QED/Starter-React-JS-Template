@@ -1,11 +1,11 @@
-import React from 'react';
-import { LayoutContainer } from './styled';
+import { memo } from 'react';
+
 interface MainLayoutProps {
   children: React.ReactNode;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  return <LayoutContainer className="layout">{children}</LayoutContainer>;
-};
+const MainLayout = memo(({ children }: MainLayoutProps) => (
+  <div className='layout'>{children}</div>
+));
 
 export default MainLayout;

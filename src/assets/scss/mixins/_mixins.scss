@@ -9,7 +9,9 @@ $maxWidth: 1920;
   $addSize: $pcSize - $mobSize;
   $addWidth: $maxWidth - $minWidth;
 
-  font-size: calc(#{$mobSize}px + #{$addSize} * ((100vw - #{$minWidth}px) / #{$addWidth}));
+  font-size: calc(
+    #{$mobSize}px + #{$addSize} * ((100vw - #{$minWidth}px) / #{$addWidth})
+  );
   line-height: normal;
 }
 
@@ -23,7 +25,12 @@ $maxWidth: 1920;
 }
 
 // Миксин для флекс-контейнера
-@mixin flex($direction: row, $justify: flex-start, $align: stretch, $wrap: nowrap) {
+@mixin flex(
+  $direction: row,
+  $justify: flex-start,
+  $align: stretch,
+  $wrap: nowrap
+) {
   display: flex;
   flex-direction: $direction;
   justify-content: $justify;
@@ -50,13 +57,21 @@ $maxWidth: 1920;
 // Миксин для медиа-запросов
 @mixin media($breakpoint) {
   @if $breakpoint == 'sm' {
-    @media (min-width: 576px) { @content; }
+    @media (min-width: 576px) {
+      @content;
+    }
   } @else if $breakpoint == 'md' {
-    @media (min-width: 768px) { @content; }
+    @media (min-width: 768px) {
+      @content;
+    }
   } @else if $breakpoint == 'lg' {
-    @media (min-width: 992px) { @content; }
+    @media (min-width: 992px) {
+      @content;
+    }
   } @else if $breakpoint == 'xl' {
-    @media (min-width: 1200px) { @content; }
+    @media (min-width: 1200px) {
+      @content;
+    }
   }
 }
 

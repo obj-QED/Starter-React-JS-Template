@@ -17,9 +17,21 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/applications/*": ["src/applications/*"],
+      "@/config/*": ["src/config/*"],
+      "@/constants/*": ["src/constants/*"],
+      "@/elements/*": ["src/elements/*"],
+      "@/pages/*": ["src/pages/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/assets/*": ["src/assets/*"],
+      "@/components/*": ["src/components/*"],
+      "@/layouts/*": ["src/layouts/*"],
+      "@/hooks/*": ["src/hooks/*"],
+      "@/types/*": ["src/types/*"],
+      "@/scripts/*": ["./scripts/*"]
     }
   },
-  "include": ["src", "src/vite-env.d.ts"],
+  "include": ["src", ".env", "vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
